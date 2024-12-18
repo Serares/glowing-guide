@@ -1,0 +1,108 @@
+# Build Folders
+bin/
+obj/
+out/
+
+# User-Specific Files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+.mono/
+
+# Windows Image File Caches
+Thumbs.db
+ehthumbs.db
+
+# Folder Configurations
+.vs/
+.idea/
+*.vscode/
+
+# Rider Files
+.idea/
+*.sln.iml
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Logs
+*.log
+
+# Visual Studio Code workspace file
+*.code-workspace
+
+# Azure DevOps
+.vspscc
+
+# Local History for JetBrains IDEs
+.localhistory/
+
+# SQL Server Management Studio projects
+*.ssmssln
+*.ssmsproj
+
+# Visual Studio Code Extensions
+.vscode/
+
+# Roslyn Cache
+*.resharper.user
+_ReSharper.Caches/
+
+# Local Settings Files
+*.sln.docstates
+appsettings.*.json
+
+# Packages
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+
+# NuGet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+.scaffolding/
+
+# DotNet Specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Tooling
+.dotnet_tool/
+
+# Other IDEs and editors
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# IIS Config Files
+.config/
+
+# Publish outputs
+.publish/
+publish/
+
+# Static Analysis tools
+*.recommends
+
+# Coverage Reports
+*.coverage
+*.coveragexml
+*.codecov
+
+# SonarCloud
+.sonarqube/

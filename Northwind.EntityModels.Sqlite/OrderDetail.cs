@@ -23,7 +23,7 @@ public partial class OrderDetail
     public int ProductId { get; set; }
 
     [Column(TypeName = "money")]
-    public double UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
     [Column(TypeName = "smallint")]
     public short Quantity { get; set; }

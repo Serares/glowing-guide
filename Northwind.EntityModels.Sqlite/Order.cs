@@ -19,43 +19,52 @@ public partial class Order
     [Key]
     public int OrderId { get; set; }
 
+    // [Required]
     [Column(TypeName = "nchar (5)")]
+    [StringLength(5)]
+    [RegularExpression("[A-Z]{5}")]
     public string? CustomerId { get; set; }
 
     [Column(TypeName = "INT")]
     public int? EmployeeId { get; set; }
 
     [Column(TypeName = "datetime")]
-    public string? OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public string? RequiredDate { get; set; }
+    public DateTime? RequiredDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public string? ShippedDate { get; set; }
+    public DateTime? ShippedDate { get; set; }
 
     [Column(TypeName = "INT")]
     public int? ShipVia { get; set; }
 
     [Column(TypeName = "money")]
-    public double? Freight { get; set; }
+    public decimal? Freight { get; set; }
 
     [Column(TypeName = "nvarchar (40)")]
+    [StringLength(40)]
     public string? ShipName { get; set; }
 
     [Column(TypeName = "nvarchar (60)")]
+    [StringLength(60)]
     public string? ShipAddress { get; set; }
 
     [Column(TypeName = "nvarchar (15)")]
+    [StringLength(15)]
     public string? ShipCity { get; set; }
 
     [Column(TypeName = "nvarchar (15)")]
+    [StringLength(15)]
     public string? ShipRegion { get; set; }
 
     [Column(TypeName = "nvarchar (10)")]
+    [StringLength(10)]
     public string? ShipPostalCode { get; set; }
 
     [Column(TypeName = "nvarchar (15)")]
+    [StringLength(15)]
     public string? ShipCountry { get; set; }
 
     [ForeignKey("CustomerId")]

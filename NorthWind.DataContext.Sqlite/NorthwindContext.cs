@@ -42,7 +42,7 @@ public partial class NorthwindContext : DbContext
             string database = "Northwind.db";
             string dir = Environment.CurrentDirectory;
             string path = string.Empty;
-            if (dir.EndsWith("net8.0"))
+            if (dir.EndsWith("net9.0"))
             {
                 // In the <project>\bin\<Debug|Release>\net8.0 directory.
                 path = Path.Combine("..", "..", "..", "..", database);

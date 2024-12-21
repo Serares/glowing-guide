@@ -1,6 +1,10 @@
+using Northwind.EntityModels;
+
 #region Configure the webserver host and services.
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
+builder.Services.AddNorthwindContext();
+
 var app = builder.Build();
 #endregion
 

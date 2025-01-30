@@ -1,9 +1,19 @@
 using Northwind.EntityModels;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 #region Configure the webserver host and services.
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddNorthwindContext();
+
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.ConfigureEndpointDefaults(listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.UseHttps(); // Http3 requires secure connection
+    });
+});
 
 var app = builder.Build();
 #endregion

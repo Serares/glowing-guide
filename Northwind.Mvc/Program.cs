@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Northwind.Mvc.Data;
+using Northwind.EntityModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddNorthwindContext();
 
 var app = builder.Build();
 
@@ -37,6 +40,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
+    // the ? makes the value optional
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 

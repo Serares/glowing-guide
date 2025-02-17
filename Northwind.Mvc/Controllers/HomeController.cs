@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
+using Microsoft.EntityFrameworkCore;
 using Northwind.EntityModels;
 
 namespace Northwind.Mvc.Controllers;
@@ -29,6 +30,43 @@ public class HomeController : Controller
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    public IActionResult ModelBinding()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult ModelBinding(Thing thing)
+    {
+        HomeModelBindingViewModel model = new(
+            Thing: thing,
+            HasErrors: !ModelState.IsValid,
+            ValidationErrors: ModelState.Values
+            .SelectMany(state => state.Errors)
+            .Select(error => error.ErrorMessage)
+        );
+
+        return View(model); // Show the model bound
+    }
+
+    public IActionResult ProductDetail(int? id)
+    {
+        if (!id.HasValue)
+        {
+            return BadRequest($"Invalid product ID: {id}");
+        }
+
+        Product? model = _db.Products.Include(p => p.Category)
+        .SingleOrDefault(p => p.ProductId == id);
+
+        if (model is null)
+        {
+            return NotFound($"Product with ID: {id} not found");
+        }
+
+        return View(model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

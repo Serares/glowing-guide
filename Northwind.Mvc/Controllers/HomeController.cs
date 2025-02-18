@@ -17,6 +17,7 @@ public class HomeController : Controller
         _db = db;
     }
 
+    [ResponseCache(Duration = 10 /* seconds */, Location = ResponseCacheLocation.Any)]
     public IActionResult Index()
     {
         HomeIndexViewModel model = new(
@@ -27,6 +28,7 @@ public class HomeController : Controller
         return View(model);
     }
 
+    [Route("private")]
     public IActionResult Privacy()
     {
         return View();
@@ -40,6 +42,8 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult ModelBinding(Thing thing)
     {
+        _logger.LogInformation($"Request received: {Request.Path}");
+        _logger.LogInformation($"Request parameters: {string.Join(", ", Request.Query.Select(x => $"{x.Key}={x.Value}"))}");
         HomeModelBindingViewModel model = new(
             Thing: thing,
             HasErrors: !ModelState.IsValid,

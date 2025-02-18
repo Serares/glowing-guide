@@ -17,6 +17,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddNorthwindContext();
 
+builder.Services.AddOutputCache(options =>
+{
+    options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(10);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,13 +43,19 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
+app.UseOutputCache();
+
 app.MapControllerRoute(
     name: "default",
     // the ? makes the value optional
     pattern: "{controller=Home}/{action=Index}/{id?}")
+    .CacheOutput()
     .WithStaticAssets();
 
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.MapGet("/notcached", () => DateTime.Now.ToString());
+app.MapGet("/cached", () => DateTime.Now.ToString()).CacheOutput();
 
 app.Run(); // This is a blocking call

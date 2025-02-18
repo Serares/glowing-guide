@@ -19,7 +19,8 @@ builder.Services.AddNorthwindContext();
 
 builder.Services.AddOutputCache(options =>
 {
-    options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(10);
+    options.DefaultExpirationTimeSpan = TimeSpan.FromSeconds(40);
+    options.AddPolicy("views", p => p.SetVaryByQuery("alertStyle"));
 });
 
 var app = builder.Build();
@@ -49,7 +50,7 @@ app.MapControllerRoute(
     name: "default",
     // the ? makes the value optional
     pattern: "{controller=Home}/{action=Index}/{id?}")
-    .CacheOutput()
+    // .CacheOutput(policyName: "views") // cache disabled
     .WithStaticAssets();
 
 app.MapRazorPages()

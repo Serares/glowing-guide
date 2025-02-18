@@ -55,13 +55,14 @@ public class HomeController : Controller
         return View(model); // Show the model bound
     }
 
-    public IActionResult ProductDetail(int? id)
+    public IActionResult ProductDetail(int? id, string alertStyle = "success")
     {
         if (!id.HasValue)
         {
             return BadRequest($"Invalid product ID: {id}");
         }
 
+        ViewData["alertStyle"] = alertStyle;
         Product? model = _db.Products.Include(p => p.Category)
         .SingleOrDefault(p => p.ProductId == id);
 

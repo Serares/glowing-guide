@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Northwind.Mvc.Models;
 using Microsoft.EntityFrameworkCore;
 using Northwind.EntityModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Northwind.Mvc.Controllers;
 
@@ -29,6 +30,7 @@ public class HomeController : Controller
     }
 
     [Route("private")]
+    [Authorize(Roles = "Administrators")]
     public IActionResult Privacy()
     {
         return View();

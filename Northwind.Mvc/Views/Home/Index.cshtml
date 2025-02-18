@@ -49,7 +49,7 @@
                         <h3>@Model.Categories[c].Description</h3>
                         <p>
                             <a class="btn btn-primary" href="/home/categorydetail/
-                @Model.Categories[c].CategoryId">View</a>
+                        @Model.Categories[c].CategoryId">View</a>
                         </p>
                     </div>
                 </div>
@@ -75,6 +75,11 @@
         <h3>Query customers from a service</h3>
         <form asp-action="Customers" method="get">
             <input name="country" placeholder="Enter a country" />
+            <input type="submit" />
+        </form>
+        <h3>Query products by price</h3>
+        <form asp-action="ProductsThatCostMoreThan" method="GET">
+            <input name="price" placeholder="Enter a product price" />
             <input type="submit" />
         </form>
         <h3>Query products by price</h3>

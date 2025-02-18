@@ -18,12 +18,12 @@ public class HomeController : Controller
     }
 
     [ResponseCache(Duration = 10 /* seconds */, Location = ResponseCacheLocation.Any)]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         HomeIndexViewModel model = new(
             VisitorCount: Random.Shared.Next(1, 1000),
-            Categories: _db.Categories.ToList(),
-            Products: _db.Products.ToList()
+            Categories: await _db.Categories.ToListAsync(),
+            Products: await _db.Products.ToListAsync()
         );
         return View(model);
     }
@@ -55,7 +55,7 @@ public class HomeController : Controller
         return View(model); // Show the model bound
     }
 
-    public IActionResult ProductDetail(int? id, string alertStyle = "success")
+    public async Task<IActionResult> ProductDetail(int? id, string alertStyle = "success")
     {
         if (!id.HasValue)
         {
@@ -63,13 +63,36 @@ public class HomeController : Controller
         }
 
         ViewData["alertStyle"] = alertStyle;
-        Product? model = _db.Products.Include(p => p.Category)
-        .SingleOrDefault(p => p.ProductId == id);
+        Product? model = await _db.Products.Include(p => p.Category)
+        .SingleOrDefaultAsync(p => p.ProductId == id);
 
         if (model is null)
         {
             return NotFound($"Product with ID: {id} not found");
         }
+
+        return View(model);
+    }
+
+    public IActionResult ProductsThatCostMoreThan(decimal? price)
+    {
+        if (!price.HasValue)
+        {
+            return BadRequest("Price not provided");
+        }
+
+        IEnumerable<Product> model = _db.Products
+        .Include(p => p.Category)
+        .Include(p => p.Supplier)
+        .Where(p => p.UnitPrice > price);
+
+
+        if (!model.Any())
+        {
+            return NotFound($"No product costs more than {price:C}");
+        }
+
+        ViewData["MaxPrice"] = price.Value.ToString("C");
 
         return View(model);
     }

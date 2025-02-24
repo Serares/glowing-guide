@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Formatters; // to use IOutputFormatter
 using Northwind.EntityModels;
 using Microsoft.Extensions.Caching.Memory;
+using Northwind.WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,8 @@ builder.Services.AddControllers(options =>
 builder.Services.AddOpenApi();
 
 builder.Services.AddNorthwindContext();
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 

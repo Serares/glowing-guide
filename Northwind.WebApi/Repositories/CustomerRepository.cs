@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Caching.Memory;
 using Northwind.EntityModels;
-using Northwind.WebApi.Repositories;
+
+namespace Northwind.WebApi.Repositories;
 
 public class CustomerRepository : ICustomerRepository
 {
@@ -68,12 +69,12 @@ public class CustomerRepository : ICustomerRepository
         return null;
     }
 
-    public Task<Customer[]> RetriveAllAsync()
+    public Task<Customer[]> RetrieveAllAsync()
     {
         return _db.Customers.ToArrayAsync();
     }
 
-    public Task<Customer?> RetriveAsync(string id)
+    public Task<Customer?> RetrieveAsync(string id)
     {
         id = id.ToUpper();
 

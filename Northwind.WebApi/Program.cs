@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.Formatters; // to use IOutputFormatter
 using Northwind.EntityModels;
 using Microsoft.Extensions.Caching.Memory;
 using Northwind.WebApi.Repositories;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI; // to use OpenApi spec with Swagger
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,12 +44,27 @@ builder.Services.AddNorthwindContext();
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Northwind Service API Version 1");
+
+        c.SupportedSubmitMethods([
+            SubmitMethod.Get,
+            SubmitMethod.Post,
+            SubmitMethod.Put,
+            SubmitMethod.Delete
+        ]);
+    });
 }
 
 app.UseHttpsRedirection();

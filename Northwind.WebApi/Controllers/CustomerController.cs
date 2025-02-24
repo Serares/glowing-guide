@@ -27,7 +27,7 @@ public class CustomersController : ControllerBase
         }
         else
         {
-            return (await _repo.RetrieveAllAsync()).Where(customer => customer.Country == country);
+            return (await _repo.RetrieveAllAsync()).Where(customer => customer.Country.ToLower() == country.ToLower());
         }
     }
 

@@ -19,7 +19,6 @@ ehthumbs.db
 # Folder Configurations
 .vs/
 .idea/
-*.vscode/
 
 # Rider Files
 .idea/

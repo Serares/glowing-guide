@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore; // use sqlite
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options; // use IService Collection
 
 namespace Northwind.EntityModels;
@@ -41,9 +42,10 @@ public static class NorthwindCotnextExtensions
             // Data Source is the modern equivalent of Filename.
             options.UseSqlite($"Data Source={path}");
 
-            options.LogTo(NorthwindContextLogger.WriteLine,
+            options.LogTo(
+                (message) => NorthwindContextLogger.WriteLine(message, new[] { LogLevel.Error, LogLevel.Warning }),
                 [Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting]
-                );
+            );
 
         },
         // Register with a transient lifetime to avoid concurrency

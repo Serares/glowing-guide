@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Northwind.EntityModels;
 
@@ -60,8 +61,10 @@ public partial class NorthwindContext : DbContext
                 message: $"{path} not found.", fileName: path);
             }
             optionsBuilder.UseSqlite($"Data Source={path}");
-            optionsBuilder.LogTo(NorthwindContextLogger.WriteLine,
-            new[] { Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting });
+            optionsBuilder.LogTo(
+                (message) => NorthwindContextLogger.WriteLine(message, new[] { LogLevel.Error, LogLevel.Warning }),
+                new[] { Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuting }
+            );
         }
     }
 
